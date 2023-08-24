@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+    <video id="media" src="" width="720" height="480" controls autoplay>浏览器不支持video标签 </video>
+    </video>
+</body>
+<script>
+    $(function () {
+        $("#media").attr('src', '/test_resp/?path=/media/video.mp4');
+    })
+
+</script>
+
+{% endblock content %}

@@ -1,0 +1,39 @@
+version: "3"
+services:
+  videoplay_data:
+    restart: always
+    image: allenxun/storage:0.1
+    container_name: videoplay_data
+    volumes:
+      - ./storage/mydir:/mydirdata
+      - ./storage/data:/var/lib/mysql
+      - ./storage/conf/my.cnf:/etc/my.cnf
+      - ./storage/source:/docker-entrypoint-initdb.d
+    environment:
+      - "MYSQL_HOST=videoplay_data"
+      - "MYSQL_PORT=3306"
+      - "MYSQL_USER=allen"
+      - "MYSQL_ROOT_PASSWORD=allenxun123"
+      - "MYSQL_DATABASE=mydata"
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8000:3306
+
+  videoplay:
+    restart: always
+    image: allenxun/videoplay:1.2
+    container_name: videoplay
+    volumes:
+      - ../videoplay:/home/videoproject
+      - ../videofile:/tmp
+    command: python3 /home/videoproject/manage.py runserver 0.0.0.0:8001
+    ports:
+      - 8001:8001
+    depends_on:
+      - videoplay_data
+
+
+#Create database mydata default character set utf8 collate utf8_general_ci;
+#Create user 'allen'@'%' identified by 'Allen123!@#';
+#Grant all privileges on mydata.* to 'allen'@'%';
+#flush privileges;

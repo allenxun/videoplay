@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>视频名称</th>
+                <th>总季数</th>
+                <th>总级数</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in videos %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="/videoinfo/{{ i.id }}">{{ i.name }}</a></td>
+                <td>{{ i.season }}</td>
+                <td>{{ i.episode }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</div>
+
+{% endblock content %}
